@@ -2,14 +2,12 @@ package com.jaimayal.accountservice.services;
 
 import com.jaimayal.accountservice.entities.RoleOperation;
 import com.jaimayal.accountservice.entities.User;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/v1/auth")
+@Service
 public class UserService {
     public void save(User user) {
     }

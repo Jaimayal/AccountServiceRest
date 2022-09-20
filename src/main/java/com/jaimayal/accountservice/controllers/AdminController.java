@@ -42,7 +42,7 @@ public class AdminController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUserRoles(@RequestBody RoleOperation operation) {
+    public ResponseEntity<?> updateUserRoles(@RequestBody final RoleOperation operation) {
         userService.updateRolesFollowingOperation(operation);
         return new ResponseEntity<>(HttpStatus.OK);
     }
