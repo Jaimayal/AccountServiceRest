@@ -1,4 +1,4 @@
-> *Puedes consultar la documentacion en español [aqui]()*
+> *Puedes consultar la documentacion en español [aqui](./README.es.md)*
 
 ### Description
 Account Service following the principles of a REST API + Authentication + Authorization + Persistence.
