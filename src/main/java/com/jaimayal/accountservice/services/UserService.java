@@ -1,5 +1,6 @@
 package com.jaimayal.accountservice.services;
 
+import com.jaimayal.accountservice.entities.RoleOperation;
 import com.jaimayal.accountservice.entities.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +22,8 @@ public class UserService {
     }
 
     public void deleteUserByEmail(String email) {
+    }
+
+    public void updateRolesFollowingOperation(RoleOperation operation) {
     }
 }
