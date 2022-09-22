@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -33,7 +32,7 @@ public class AdminController {
      * @return 200 OK or 404 NOT_FOUND 
      */
     @GetMapping("/user/{id}")
-    public ResponseEntity<?> retrieveUserById(@PathVariable final UUID id) {
+    public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

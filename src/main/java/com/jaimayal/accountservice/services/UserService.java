@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -30,7 +29,7 @@ public class UserService {
         this.repository.save(user);
     }
 
-    public User getUserById(UUID id) {
+    public User getUserById(Long id) {
         Optional<User> possibleUser = this.repository.findById(id);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
         return user;
