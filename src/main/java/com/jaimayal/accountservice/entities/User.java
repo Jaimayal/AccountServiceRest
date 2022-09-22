@@ -4,27 +4,46 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @ToString 
 @EqualsAndHashCode
+@Entity
+@Table(name = "users")
 public class User {
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    
+    @Column(name = "email")
     private String email;
+    
+    @Column(name = "password")
     private String password;
+    
+    @Enumerated
+    @CollectionTable
+    @ElementCollection
     private List<Role> roles;
     
-    public void updateRoles(RoleOperation operation) {
-        switch (operation.getOperation()) {
+    public void updateRoles(Operation operation, Role role) {
+        switch (operation) {
             case GRANT:
-                roles.add(operation.getRole());
+                roles.add(role);
                 break;
             case REMOVE:
-                roles.remove(operation.getRole());
+                roles.remove(role);
                 break;
         }
     }

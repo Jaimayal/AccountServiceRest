@@ -5,6 +5,7 @@ import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.exceptions.UserNotFoundException;
 import com.jaimayal.accountservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -14,6 +15,7 @@ public class UserService {
     private final UserRepository repository;
     
     public UserService(UserRepository repository) {
+        Assert.notNull(repository, "The UserRepository must not be null!");
         this.repository = repository;
     }
     
@@ -41,7 +43,7 @@ public class UserService {
     public void updateRolesFollowingOperation(RoleOperation operation) {
         Optional<User> possibleUser = this.repository.findByEmail(operation.getUserEmail());
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
-        user.updateRoles(operation);
+        user.updateRoles(operation.getOperation(), operation.getRole());
         this.repository.save(user);
     }
 }
