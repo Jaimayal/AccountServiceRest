@@ -2,7 +2,6 @@ package com.jaimayal.accountservice.services;
 
 import com.jaimayal.accountservice.entities.Operation;
 import com.jaimayal.accountservice.entities.Role;
-import com.jaimayal.accountservice.entities.RoleOperation;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,7 +70,7 @@ class UserServiceTest {
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         // when
-        underTest.changePasswordByUserEmail(someEmail, newPassword);
+        underTest.updateUserPasswordByEmail(someEmail, newPassword);
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -82,7 +81,7 @@ class UserServiceTest {
     }
 
     @Test
-    void checkFindByIdIsInvoked() {
+    void checkFindByEmailIsInvoked() {
         // given
         User user = new User(
                 1L,
@@ -90,13 +89,13 @@ class UserServiceTest {
                 "12345",
                 List.of(Role.ADMINISTRATOR)
         );
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         // when
-        underTest.getUserById(user.getId());
+        underTest.getUserByEmail(user.getEmail());
         
         // then
-        verify(userRepository).findById(user.getId());
+        verify(userRepository).findByEmail(user.getEmail());
     }
 
     @Test
@@ -124,7 +123,7 @@ class UserServiceTest {
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         
         // when
-        underTest.updateUserRolesByEmail(user.getEmail(), Operation.GRANT, Role.USER);
+        underTest.updateUserRolesByEmail(user.getEmail(), Operation.GRANT, List.of(Role.USER));
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -147,7 +146,7 @@ class UserServiceTest {
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         // when
-        underTest.updateUserRolesByEmail(user.getEmail(), Operation.REMOVE, Role.ADMINISTRATOR);
+        underTest.updateUserRolesByEmail(user.getEmail(), Operation.REMOVE, List.of(Role.ADMINISTRATOR));
 
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);

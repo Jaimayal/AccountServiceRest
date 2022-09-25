@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +25,11 @@ public class AuthController {
     /**
      * Registers one new user
      * @param user the user that must be registered into the database
-     * @return 200 OK
+     * @return 200 OK or 409 CONFLICT if email already registered
      * @see User
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(final User user) {
+    public ResponseEntity<?> registerUser(@RequestBody final User user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -38,11 +40,11 @@ public class AuthController {
      * @return 202 ACCEPTED
      * @see PasswordChange
      */
-    @PostMapping("/changepass")
-    public ResponseEntity<?> changePassword(final PasswordChange passwordChange) {
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody final PasswordChange passwordChange) {
         String password = passwordChange.getPassword();
         String email = passwordChange.getUserEmail();
-        userService.changePasswordByUserEmail(email, password);
+        userService.updateUserPasswordByEmail(email, password);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
