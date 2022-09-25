@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -31,7 +28,7 @@ public class AuthController {
      */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(final User user) {
-        userService.save(user);
+        userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

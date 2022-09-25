@@ -1,7 +1,9 @@
 package com.jaimayal.accountservice.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.CollectionTable;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,6 +23,8 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +40,7 @@ public class User {
     @Enumerated
     @CollectionTable
     @ElementCollection
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
     
     public void updateRoles(Operation operation, Role role) {
         switch (operation) {

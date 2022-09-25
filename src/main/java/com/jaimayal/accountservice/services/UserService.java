@@ -18,7 +18,7 @@ public class UserService {
         this.repository = repository;
     }
     
-    public void save(User user) {
+    public void addUser(User user) {
         this.repository.save(user);
     }
 
