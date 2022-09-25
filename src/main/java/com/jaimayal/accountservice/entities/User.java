@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@ToString 
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
@@ -41,19 +40,4 @@ public class User {
     @CollectionTable
     @ElementCollection
     private List<Role> roles = new ArrayList<>();
-    
-    public void updateRoles(Operation operation, Role role) {
-        switch (operation) {
-            case GRANT:
-                roles.add(role);
-                break;
-            case REMOVE:
-                roles.remove(role);
-                break;
-        }
-    }
-    
-    public void updatePassword(String newPassword) {
-        this.password = newPassword;
-    }
 }

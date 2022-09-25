@@ -1,5 +1,7 @@
 package com.jaimayal.accountservice.services;
 
+import com.jaimayal.accountservice.entities.Operation;
+import com.jaimayal.accountservice.entities.Role;
 import com.jaimayal.accountservice.entities.RoleOperation;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.exceptions.UserNotFoundException;
@@ -25,7 +27,7 @@ public class UserService {
     public void changePasswordByUserEmail(String email, String password) {
         Optional<User> possibleUser = this.repository.findByEmail(email);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
-        user.updatePassword(password);
+        this.updateUserPassword(user, password);
         this.repository.save(user);
     }
 
@@ -39,10 +41,25 @@ public class UserService {
         this.repository.deleteByEmail(email);
     }
 
-    public void updateRolesFollowingOperation(RoleOperation operation) {
-        Optional<User> possibleUser = this.repository.findByEmail(operation.getUserEmail());
+    public void updateUserRolesByEmail(String email, Operation operationType, Role role) {
+        Optional<User> possibleUser = this.repository.findByEmail(email);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
-        user.updateRoles(operation.getOperation(), operation.getRole());
+        this.updateUserRoles(user, operationType, role);
         this.repository.save(user);
+    }
+
+    private void updateUserRoles(User user, Operation operation, Role role) {
+        switch (operation) {
+            case GRANT:
+                user.getRoles().add(role);
+                break;
+            case REMOVE:
+                user.getRoles().remove(role);
+                break;
+        }
+    }
+
+    private void updateUserPassword(User user, String newPassword) {
+        user.setPassword(newPassword);
     }
 }

@@ -50,14 +50,16 @@ public class AdminController {
 
     /**
      * Updates an user role's following the specified operation
-     * @param operation The format of the OPERATION, containing the user's email, the role 
+     * @param roleOperation The format of the OPERATION, containing the user's email, the role 
      *                  and the type of operation.
      * @return 200 OK or 404 NOT_FOUND if user is not found.
      * @see RoleOperation
      */
     @PutMapping
-    public ResponseEntity<?> updateUserRoles(@RequestBody final RoleOperation operation) {
-        userService.updateRolesFollowingOperation(operation);
+    public ResponseEntity<?> updateUserRoles(@RequestBody final RoleOperation roleOperation) {
+        userService.updateUserRolesByEmail(roleOperation.getUserEmail(), 
+                roleOperation.getOperation(), 
+                roleOperation.getRole());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

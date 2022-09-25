@@ -1,6 +1,8 @@
 package com.jaimayal.accountservice.services;
 
+import com.jaimayal.accountservice.entities.Operation;
 import com.jaimayal.accountservice.entities.Role;
+import com.jaimayal.accountservice.entities.RoleOperation;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,7 +100,7 @@ class UserServiceTest {
     }
 
     @Test
-    void deleteUserByEmail() {
+    void checkDeleteMethodIsCalled() {
         // given
         String someEmail = "jaime@gmail.com";
         
@@ -109,6 +112,52 @@ class UserServiceTest {
     }
 
     @Test
-    void updateRolesFollowingOperation() {
+    void checkGrantRoleOperationIsSuccessful() {
+        // given
+        RoleOperation roleOperation = new RoleOperation(
+                "jaime@gmail.com",
+                Role.USER,
+                Operation.GRANT
+        );
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(new User()));
+        
+        // when
+        underTest.updateRolesFollowingOperation(roleOperation);
+        
+        // then
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+
+        User userCaptured = userCaptor.getValue();
+        assertThat(userCaptured.getRoles().contains(roleOperation.getRole())).isTrue();
+    }
+
+    @Test
+    void checkRemoveRoleOperationIsSuccessful() {
+        // given
+        User user = new User(
+                1L,
+                "jaime@gmail.com",
+                "12345",
+                new ArrayList<>(List.of(Role.ADMINISTRATOR))
+        );
+        
+        RoleOperation roleOperation = new RoleOperation(
+                "jaime@gmail.com",
+                Role.ADMINISTRATOR,
+                Operation.REMOVE
+        );
+        
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+
+        // when
+        underTest.updateRolesFollowingOperation(roleOperation);
+
+        // then
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+
+        User userCaptured = userCaptor.getValue();
+        assertThat(userCaptured.getRoles().contains(roleOperation.getRole())).isFalse();
     }
 }
