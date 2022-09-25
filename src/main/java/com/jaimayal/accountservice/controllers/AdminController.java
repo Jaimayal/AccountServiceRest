@@ -57,9 +57,8 @@ public class AdminController {
      */
     @PutMapping
     public ResponseEntity<?> updateUserRoles(@RequestBody final RoleOperation roleOperation) {
-        userService.updateUserRolesByEmail(roleOperation.getUserEmail(), 
-                roleOperation.getOperation(), 
-                roleOperation.getRole());
+        String email = roleOperation.getUserEmail();
+        userService.updateUserRolesByEmail(email, roleOperation.getOperation(), roleOperation.getRole());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

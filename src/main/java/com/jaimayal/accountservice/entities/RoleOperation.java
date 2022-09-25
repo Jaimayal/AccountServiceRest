@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class RoleOperation {
     @JsonProperty("user")
     private String userEmail;

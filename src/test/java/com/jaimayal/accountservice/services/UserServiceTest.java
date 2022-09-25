@@ -114,22 +114,24 @@ class UserServiceTest {
     @Test
     void checkGrantRoleOperationIsSuccessful() {
         // given
-        RoleOperation roleOperation = new RoleOperation(
+        User user = new User(
+                1L,
                 "jaime@gmail.com",
-                Role.USER,
-                Operation.GRANT
+                "12345",
+                new ArrayList<>(List.of(Role.ADMINISTRATOR))
         );
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(new User()));
+
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         
         // when
-        underTest.updateRolesFollowingOperation(roleOperation);
+        underTest.updateUserRolesByEmail(user.getEmail(), Operation.GRANT, Role.USER);
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
 
         User userCaptured = userCaptor.getValue();
-        assertThat(userCaptured.getRoles().contains(roleOperation.getRole())).isTrue();
+        assertThat(userCaptured.getRoles().contains(Role.USER)).isTrue();
     }
 
     @Test
@@ -142,22 +144,16 @@ class UserServiceTest {
                 new ArrayList<>(List.of(Role.ADMINISTRATOR))
         );
         
-        RoleOperation roleOperation = new RoleOperation(
-                "jaime@gmail.com",
-                Role.ADMINISTRATOR,
-                Operation.REMOVE
-        );
-        
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         // when
-        underTest.updateRolesFollowingOperation(roleOperation);
+        underTest.updateUserRolesByEmail(user.getEmail(), Operation.REMOVE, Role.ADMINISTRATOR);
 
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
 
         User userCaptured = userCaptor.getValue();
-        assertThat(userCaptured.getRoles().contains(roleOperation.getRole())).isFalse();
+        assertThat(userCaptured.getRoles().contains(Role.ADMINISTRATOR)).isFalse();
     }
 }
