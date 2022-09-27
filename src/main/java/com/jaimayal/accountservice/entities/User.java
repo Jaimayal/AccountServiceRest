@@ -29,10 +29,16 @@ public class User {
     @Column(name = "id")
     private Long id;
     
-    @Column(name = "email")
+    @Column(name = "name", unique = false, nullable = false)
+    private String name;
+    
+    @Column(name = "last_name", unique = false, nullable = false)
+    private String lastName;
+    
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
     
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
     
     @Enumerated

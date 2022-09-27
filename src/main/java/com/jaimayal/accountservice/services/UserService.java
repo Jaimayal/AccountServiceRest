@@ -18,7 +18,7 @@ public class UserService {
     private final UserRepository repository;
     
     public UserService(UserRepository repository) {
-        Assert.notNull(repository, "The UserRepository must not be null!");
+        Assert.notNull(repository, "UserRepository must not be null!");
         this.repository = repository;
     }
     
@@ -38,19 +38,29 @@ public class UserService {
         this.repository.save(user);
     }
 
-    public User getUserByEmail(String email) {
-        Optional<User> possibleUser = this.repository.findByEmail(email);
+    private void updateUserPassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+    }
+
+    public User getUserById(Long id) {
+        Optional<User> possibleUser = this.repository.findById(id);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
         return user;
     }
 
     @Transactional
-    public void deleteUserByEmail(String email) {
-        this.repository.deleteByEmail(email);
+    public void deleteUserById(Long id) {
+        boolean exists = this.repository.existsById(id);
+        if (!exists) {
+            throw new UserNotFoundException();
+        }
+        
+        this.repository.deleteById(id);
     }
 
-    public void updateUserRolesByEmail(String email, Operation operationType, List<Role> roles) {
-        Optional<User> possibleUser = this.repository.findByEmail(email);
+    @Transactional
+    public void updateUserRolesById(Long id, Operation operationType, List<Role> roles) {
+        Optional<User> possibleUser = this.repository.findById(id);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
         this.updateUserRoles(user, operationType, roles);
         this.repository.save(user);
@@ -65,9 +75,5 @@ public class UserService {
                 roles.forEach(role -> user.getRoles().remove(role));
                 break;
         }
-    }
-
-    private void updateUserPassword(User user, String newPassword) {
-        user.setPassword(newPassword);
     }
 }

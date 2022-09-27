@@ -22,6 +22,8 @@ class UserRepositoryTest {
         // given
         User user = new User(
                 1L,
+                "jaime",
+                "ayala",
                 "jaime@gmail.com",
                 "12345",
                 List.of(Role.USER)
@@ -40,6 +42,8 @@ class UserRepositoryTest {
         // given
         User user = new User(
                 1L,
+                "jaime",
+                "ayala",
                 "jaime@gmail.com",
                 "12345",
                 List.of(Role.USER)

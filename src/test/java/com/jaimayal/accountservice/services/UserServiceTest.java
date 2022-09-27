@@ -34,10 +34,44 @@ class UserServiceTest {
     }
 
     @Test
+    void checkFindByEmailIsInvoked() {
+        // given
+        User user = new User(
+                1L,
+                "jaime",
+                "ayala",
+                "jaime@gmail.com",
+                "12345",
+                List.of(Role.ADMINISTRATOR)
+        );
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+
+        // when
+        underTest.getUserById(user.getId());
+
+        // then
+        verify(userRepository).findById(user.getId());
+    }
+
+    @Test
+    void checkDeleteByIdIsInvoked() {
+        // given
+        Long someId = 1L;
+
+        // when
+        underTest.deleteUserById(someId);
+
+        // then
+        verify(userRepository).deleteById(someId);
+    }
+
+    @Test
     void checkUserIsSaved() {
         // given
         User user = new User(
                 1L,
+                "jaime",
+                "ayala",
                 "jaime@gmail.com",
                 "12345",
                 List.of(Role.USER)
@@ -60,6 +94,8 @@ class UserServiceTest {
         String oldPassword = "00000";
         User user = new User(
                 1L,
+                "jaime",
+                "ayala",
                 "jaime@gmail.com",
                 oldPassword,
                 List.of(Role.ADMINISTRATOR)
@@ -81,49 +117,21 @@ class UserServiceTest {
     }
 
     @Test
-    void checkFindByEmailIsInvoked() {
-        // given
-        User user = new User(
-                1L,
-                "jaime@gmail.com",
-                "12345",
-                List.of(Role.ADMINISTRATOR)
-        );
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
-
-        // when
-        underTest.getUserByEmail(user.getEmail());
-        
-        // then
-        verify(userRepository).findByEmail(user.getEmail());
-    }
-
-    @Test
-    void checkDeleteMethodIsCalled() {
-        // given
-        String someEmail = "jaime@gmail.com";
-        
-        // when
-        underTest.deleteUserByEmail(someEmail);
-        
-        // then
-        verify(userRepository).deleteByEmail(anyString());
-    }
-
-    @Test
     void checkGrantRoleOperationIsSuccessful() {
         // given
         User user = new User(
                 1L,
+                "jaime",
+                "ayala",
                 "jaime@gmail.com",
                 "12345",
                 new ArrayList<>(List.of(Role.ADMINISTRATOR))
         );
 
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         
         // when
-        underTest.updateUserRolesByEmail(user.getEmail(), Operation.GRANT, List.of(Role.USER));
+        underTest.updateUserRolesById(user.getId(), Operation.GRANT, List.of(Role.USER));
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -138,15 +146,17 @@ class UserServiceTest {
         // given
         User user = new User(
                 1L,
+                "jaime",
+                "ayala",
                 "jaime@gmail.com",
                 "12345",
                 new ArrayList<>(List.of(Role.ADMINISTRATOR))
         );
         
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         // when
-        underTest.updateUserRolesByEmail(user.getEmail(), Operation.REMOVE, List.of(Role.ADMINISTRATOR));
+        underTest.updateUserRolesById(user.getId(), Operation.REMOVE, List.of(Role.ADMINISTRATOR));
 
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);

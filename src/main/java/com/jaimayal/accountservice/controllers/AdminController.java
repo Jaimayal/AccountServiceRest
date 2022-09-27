@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/admin")
 public class AdminController {
     private final UserService userService;
-
+    
     public AdminController(final UserService userService) {
         Assert.notNull(userService, "UserService must not be null!");
         this.userService = userService;
@@ -26,37 +26,39 @@ public class AdminController {
 
     /**
      * Gets the all the details of one user by its unique ID.
-     * @param email Unique email of an user
-     * @return 200 OK or 404 NOT_FOUND 
+     * @param id Unique ID linked to one user
+     * @return 200 OK or 404 NOT_FOUND if user does not exist.
      */
-    @GetMapping("/user/{email}")
-    public ResponseEntity<?> retrieveUserByEmail(@PathVariable final String email) {
-        User user = userService.getUserByEmail(email);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
+        User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     /**
-     * Deletes all the users linked to one email.
-     * @param email The email linked to one or multiple users
-     * @return 204 NO_CONTENT
+     * Deletes one user by its unique ID.
+     * @param id Unique ID linked to one user
+     * @return 204 NO_CONTENT or 404 NOT_FOUND if user does not exist.
      */
-    @DeleteMapping("/user/{email}")
-    public ResponseEntity<?> deleteUserByEmail(@PathVariable final String email) {
-        userService.deleteUserByEmail(email);
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable final Long id) {
+        userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
-     * Updates an user role's following the specified operation
-     * @param roleOperation The format of the OPERATION, containing the user's email, the role 
-     *                  and the type of operation.
-     * @return 200 OK or 404 NOT_FOUND if user is not found.
+     * Updates the user roles following the specified RoleOperation.
+     * @param roleOperation The format of the operation to apply.
+     * @param id Unique ID linked to one user
+     * @return 200 OK or 404 NOT_FOUND if user does not exist.
      * @see RoleOperation
      */
-    @PutMapping("/change-roles")
-    public ResponseEntity<?> updateUserRoles(@RequestBody final RoleOperation roleOperation) {
-        String email = roleOperation.getUserEmail();
-        userService.updateUserRolesByEmail(email, roleOperation.getOperation(), roleOperation.getRoles());
+    @PatchMapping("/user/{id}/change-roles")
+    public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
+                                                 @RequestBody final RoleOperation roleOperation) {
+        userService.updateUserRolesById(id, 
+                roleOperation.getOperation(), 
+                roleOperation.getRoles());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
