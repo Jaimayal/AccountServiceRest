@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/admin")
-public class AdminController {
+@RequestMapping("/api/v1/users")
+public class UserController {
     private final UserService userService;
     
-    public AdminController(final UserService userService) {
+    public UserController(final UserService userService) {
         Assert.notNull(userService, "UserService must not be null!");
         this.userService = userService;
     }
@@ -29,10 +31,20 @@ public class AdminController {
      * @param id Unique ID linked to one user
      * @return 200 OK or 404 NOT_FOUND if user does not exist.
      */
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    /**
+     * Gets a List containing all the details of all the users.
+     * @return 200 OK 
+     */
+    @GetMapping()
+    public ResponseEntity<?> retrieveAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     /**
@@ -40,7 +52,7 @@ public class AdminController {
      * @param id Unique ID linked to one user
      * @return 204 NO_CONTENT or 404 NOT_FOUND if user does not exist.
      */
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable final Long id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -53,7 +65,7 @@ public class AdminController {
      * @return 200 OK or 404 NOT_FOUND if user does not exist.
      * @see RoleOperation
      */
-    @PatchMapping("/user/{id}/change-roles")
+    @PatchMapping("/{id}/roles")
     public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
                                                  @RequestBody final RoleOperation roleOperation) {
         userService.updateUserRolesById(id, 

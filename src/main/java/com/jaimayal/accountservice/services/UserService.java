@@ -4,6 +4,7 @@ import com.jaimayal.accountservice.entities.Operation;
 import com.jaimayal.accountservice.entities.Role;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.exceptions.EmailAlreadyRegisteredException;
+import com.jaimayal.accountservice.exceptions.PasswordDoesNotMatchException;
 import com.jaimayal.accountservice.exceptions.UserNotFoundException;
 import com.jaimayal.accountservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -31,15 +32,21 @@ public class UserService {
         this.repository.save(user);
     }
 
-    public void updateUserPasswordByEmail(String email, String password) {
-        Optional<User> possibleUser = this.repository.findByEmail(email);
+    @Transactional
+    public void updateUserPasswordById(Long id, String oldPassword, String newPassword) {
+        Optional<User> possibleUser = this.repository.findById(id);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
-        this.updateUserPassword(user, password);
+        this.updateUserPassword(user, oldPassword, newPassword);
         this.repository.save(user);
     }
 
-    private void updateUserPassword(User user, String newPassword) {
-        user.setPassword(newPassword);
+    private void updateUserPassword(User user, String oldPassword, String newPassword) {
+        if (user.getPassword().equals(oldPassword)) {
+            user.setPassword(newPassword);
+            return;
+        }
+        
+        throw new PasswordDoesNotMatchException();
     }
 
     public User getUserById(Long id) {
@@ -75,5 +82,9 @@ public class UserService {
                 roles.forEach(role -> user.getRoles().remove(role));
                 break;
         }
+    }
+
+    public List<User> getAllUsers() {
+        return repository.findAll();
     }
 }

@@ -13,8 +13,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PasswordChange {
-    private String password;
-    
-    @JsonProperty("user")
-    private String userEmail;
+    private String oldPassword;
+    private String newPassword;
 }

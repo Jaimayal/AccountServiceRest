@@ -6,6 +6,7 @@ import com.jaimayal.accountservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1/users")
 public class AuthController {
     private final UserService userService;
     
@@ -28,7 +29,7 @@ public class AuthController {
      * @return 200 OK or 409 CONFLICT if email already registered
      * @see User
      */
-    @PostMapping("/signup")
+    @PostMapping()
     public ResponseEntity<?> registerUser(@RequestBody final User user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -40,11 +41,12 @@ public class AuthController {
      * @return 202 ACCEPTED
      * @see PasswordChange
      */
-    @PutMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody final PasswordChange passwordChange) {
-        String password = passwordChange.getPassword();
-        String email = passwordChange.getUserEmail();
-        userService.updateUserPasswordByEmail(email, password);
+    @PutMapping("/{id}/password")
+    public ResponseEntity<?> changePassword(@PathVariable final Long id, 
+                                            @RequestBody final PasswordChange passwordChange) {
+        String newPassword = passwordChange.getNewPassword();
+        String oldPassword = passwordChange.getOldPassword();
+        userService.updateUserPasswordById(id, oldPassword, newPassword);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

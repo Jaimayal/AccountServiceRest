@@ -106,7 +106,7 @@ class UserServiceTest {
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         // when
-        underTest.updateUserPasswordByEmail(someEmail, newPassword);
+        underTest.updateUserPasswordById(someEmail, newPassword);
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
