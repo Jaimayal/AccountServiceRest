@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.controllers;
 
-import com.jaimayal.accountservice.entities.PasswordChange;
+import com.jaimayal.accountservice.dtos.PasswordChange;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,7 +35,12 @@ public class AuthController {
     @PostMapping()
     public ResponseEntity<?> registerUser(@RequestBody final User user) {
         userService.addUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        URI userLocation = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri();
+        return new ResponseEntity<>(userLocation, HttpStatus.CREATED);
     }
 
     /**

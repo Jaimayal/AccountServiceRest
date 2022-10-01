@@ -3,7 +3,9 @@ package com.jaimayal.accountservice.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -17,12 +19,10 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

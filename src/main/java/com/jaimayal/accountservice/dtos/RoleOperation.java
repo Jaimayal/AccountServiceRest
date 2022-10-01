@@ -1,8 +1,8 @@
-package com.jaimayal.accountservice.entities;
+package com.jaimayal.accountservice.dtos;
 
+import com.jaimayal.accountservice.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 

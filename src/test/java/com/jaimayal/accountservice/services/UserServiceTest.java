@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.services;
 
-import com.jaimayal.accountservice.entities.Operation;
+import com.jaimayal.accountservice.dtos.Operation;
 import com.jaimayal.accountservice.entities.Role;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.repositories.UserRepository;

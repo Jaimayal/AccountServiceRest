@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.entities;
+package com.jaimayal.accountservice.dtos;
 
 public enum Operation {
     REMOVE,

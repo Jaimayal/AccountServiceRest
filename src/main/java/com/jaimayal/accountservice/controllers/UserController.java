@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.controllers;
 
-import com.jaimayal.accountservice.entities.RoleOperation;
+import com.jaimayal.accountservice.dtos.RoleOperation;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.services.UserService;
 import org.springframework.http.HttpStatus;

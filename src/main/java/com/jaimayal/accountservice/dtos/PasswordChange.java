@@ -1,6 +1,5 @@
-package com.jaimayal.accountservice.entities;
+package com.jaimayal.accountservice.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
