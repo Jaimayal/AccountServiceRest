@@ -7,6 +7,7 @@ import com.jaimayal.accountservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -36,7 +38,7 @@ public class AuthController {
      * @see UserDTO
      */
     @PostMapping()
-    public ResponseEntity<?> registerUser(@RequestBody final UserDTO user) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid final UserDTO user) {
         userService.addUser(userMapper.fromDtoToEntity(user));
         URI userLocation = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -52,9 +54,9 @@ public class AuthController {
      * @return 202 ACCEPTED
      * @see PasswordUpdateDTO
      */
-    @PutMapping("/{id}/password")
+    @PatchMapping("/{id}/password")
     public ResponseEntity<?> updateUserPasswordById(@PathVariable final Long id,
-                                                    @RequestBody final PasswordUpdateDTO passwordUpdateDTO) {
+                                                    @RequestBody @Valid final PasswordUpdateDTO passwordUpdateDTO) {
         String newPassword = passwordUpdateDTO.getNewPassword();
         String oldPassword = passwordUpdateDTO.getOldPassword();
         userService.updateUserPasswordById(id, oldPassword, newPassword);
