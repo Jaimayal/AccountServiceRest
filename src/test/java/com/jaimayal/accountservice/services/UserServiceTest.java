@@ -131,7 +131,7 @@ class UserServiceTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         
         // when
-        underTest.updateUserRolesById(user.getId(), Operation.GRANT, List.of(Role.USER));
+        underTest.updateUserRolesById(user.getId(), Operation.GRANT, List.of("USER"));
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -156,7 +156,7 @@ class UserServiceTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         // when
-        underTest.updateUserRolesById(user.getId(), Operation.REMOVE, List.of(Role.ADMINISTRATOR));
+        underTest.updateUserRolesById(user.getId(), Operation.REMOVE, List.of("ADMINISTRATOR"));
 
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);

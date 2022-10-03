@@ -1,7 +1,8 @@
 package com.jaimayal.accountservice.controllers;
 
-import com.jaimayal.accountservice.dtos.RoleOperation;
-import com.jaimayal.accountservice.entities.User;
+import com.jaimayal.accountservice.dtos.RolesUpdateDTO;
+import com.jaimayal.accountservice.dtos.UserDTO;
+import com.jaimayal.accountservice.mappers.UserMapper;
 import com.jaimayal.accountservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,12 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
     
-    public UserController(final UserService userService) {
+    public UserController(final UserService userService, final UserMapper userMapper) {
         Assert.notNull(userService, "UserService must not be null!");
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -33,7 +36,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
-        User user = userService.getUserById(id);
+        UserDTO user = userMapper.fromEntityToDto(userService.getUserById(id));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -43,7 +46,7 @@ public class UserController {
      */
     @GetMapping()
     public ResponseEntity<?> retrieveAllUsers() {
-        List<User> users = userService.getAllUsers();
+        List<UserDTO> users = userMapper.fromEntitiesToDtos(userService.getAllUsers());
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
@@ -60,17 +63,18 @@ public class UserController {
 
     /**
      * Updates the user roles following the specified RoleOperation.
-     * @param roleOperation The format of the operation to apply.
+     * @param rolesUpdateDTO The format of the operation to apply.
      * @param id Unique ID linked to one user
      * @return 200 OK or 404 NOT_FOUND if user does not exist.
-     * @see RoleOperation
+     * @see RolesUpdateDTO
      */
     @PatchMapping("/{id}/roles")
     public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
-                                                 @RequestBody final RoleOperation roleOperation) {
+                                                 @RequestBody final RolesUpdateDTO rolesUpdateDTO) {
         userService.updateUserRolesById(id, 
-                roleOperation.getOperation(), 
-                roleOperation.getRoles());
+                rolesUpdateDTO.getOperationType(), 
+                rolesUpdateDTO.getRoles());
+        
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

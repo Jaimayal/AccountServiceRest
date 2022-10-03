@@ -1,5 +1,6 @@
 package com.jaimayal.accountservice.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,7 +12,10 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class PasswordChange {
+public class PasswordUpdateDTO {
+    @JsonProperty(value = "old_password")
     private String oldPassword;
+    
+    @JsonProperty(value = "new_password")
     private String newPassword;
 }

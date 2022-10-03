@@ -66,20 +66,20 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserRolesById(Long id, Operation operationType, List<Role> roles) {
+    public void updateUserRolesById(Long id, Operation operationType, List<String> roles) {
         Optional<User> possibleUser = this.repository.findById(id);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
         this.updateUserRoles(user, operationType, roles);
         this.repository.save(user);
     }
 
-    private void updateUserRoles(User user, Operation operation, List<Role> roles) {
+    private void updateUserRoles(User user, Operation operation, List<String> roles) {
         switch (operation) {
             case GRANT:
-                roles.forEach(role -> user.getRoles().add(role));
+                roles.forEach(role -> user.getRoles().add(Role.valueOf(role)));
                 break;
             case REMOVE:
-                roles.forEach(role -> user.getRoles().remove(role));
+                roles.forEach(role -> user.getRoles().remove(Role.valueOf(role)));
                 break;
         }
     }
