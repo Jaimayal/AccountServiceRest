@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -23,6 +24,7 @@ public class RolesUpdateDTO {
     private List<String> roles;
     
     @JsonProperty(value = "operation")
+    @NotBlank(message = "operation is required")
     @Pattern(regexp = "^(REMOVE|GRANT)$", message = "operation must be REMOVE or GRANT")
     private Operation operationType;
 }
