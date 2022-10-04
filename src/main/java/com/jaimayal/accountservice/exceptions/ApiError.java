@@ -1,21 +1,18 @@
 package com.jaimayal.accountservice.exceptions;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 @Getter
 @Setter
-@NoArgsConstructor
-public abstract class ApiError {
-    private LocalDateTime timestamp;
-    private int status;
-    private String error;
-    
-    private String path;
+public class ApiError extends GeneralError {
+    private String message;
+
+    public ApiError(HttpStatus status, WebRequest request, String message) {
+        super(status, request);
+        this.message = message;
+    }
 }
