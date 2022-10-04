@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.services;
 
-import com.jaimayal.accountservice.dtos.Operation;
+import com.jaimayal.accountservice.entities.Operation;
 import com.jaimayal.accountservice.entities.Role;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.exceptions.EmailAlreadyRegisteredException;
@@ -23,13 +23,14 @@ public class UserService {
         this.repository = repository;
     }
     
-    public void addUser(User user) {
+    public Long addUser(User user) {
         boolean exists = this.repository.existsByEmail(user.getEmail());
         if (exists) {
             throw new EmailAlreadyRegisteredException();
         }
         
         this.repository.save(user);
+        return user.getId();
     }
 
     @Transactional
@@ -66,15 +67,16 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserRolesById(Long id, Operation operationType, List<String> roles) {
+    public void updateUserRolesById(Long id, String operationType, List<String> roles) {
         Optional<User> possibleUser = this.repository.findById(id);
         User user = possibleUser.orElseThrow(UserNotFoundException::new);
         this.updateUserRoles(user, operationType, roles);
         this.repository.save(user);
     }
 
-    private void updateUserRoles(User user, Operation operation, List<String> roles) {
-        switch (operation) {
+    private void updateUserRoles(User user, String operation, List<String> roles) {
+        Operation operationType = Operation.valueOf(operation);
+        switch (operationType) {
             case GRANT:
                 roles.forEach(role -> user.getRoles().add(Role.valueOf(role)));
                 break;
