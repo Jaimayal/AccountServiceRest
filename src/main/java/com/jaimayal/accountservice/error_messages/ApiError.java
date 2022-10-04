@@ -1,9 +1,8 @@
-package com.jaimayal.accountservice.exceptions;
+package com.jaimayal.accountservice.error_messages;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 @Getter

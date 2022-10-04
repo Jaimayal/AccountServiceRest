@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.exceptions;
+package com.jaimayal.accountservice.error_messages;
 
 
 import lombok.Getter;
