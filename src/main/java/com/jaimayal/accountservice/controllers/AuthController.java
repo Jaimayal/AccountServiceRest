@@ -4,6 +4,7 @@ import com.jaimayal.accountservice.dtos.PasswordUpdateDTO;
 import com.jaimayal.accountservice.dtos.UserDTO;
 import com.jaimayal.accountservice.mappers.UserMapper;
 import com.jaimayal.accountservice.services.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -16,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -42,15 +40,13 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody @Valid final UserDTO user) {
         Long userId = userService.addUser(userMapper.fromDtoToEntity(user));
         
-        URI userLocation = ServletUriComponentsBuilder
+        String userLocation = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(userId)
-                .toUri();
+                .toUriString();
         
-        Map<String, Object> location = new HashMap<>();
-        location.put("location", userLocation);
-        return new ResponseEntity<>(location, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, userLocation).build();
     }
 
     /**
@@ -65,6 +61,6 @@ public class AuthController {
         String newPassword = passwordUpdateDTO.getNewPassword();
         String oldPassword = passwordUpdateDTO.getOldPassword();
         userService.updateUserPasswordById(id, oldPassword, newPassword);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

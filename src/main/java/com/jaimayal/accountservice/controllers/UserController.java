@@ -38,7 +38,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
         UserDTO user = userMapper.fromEntityToDto(userService.getUserById(id));
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     /**
@@ -48,7 +48,7 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<?> retrieveAllUsers() {
         List<UserDTO> users = userMapper.fromEntitiesToDtos(userService.getAllUsers());
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable final Long id) {
         userService.deleteUserById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /**
@@ -76,6 +76,6 @@ public class UserController {
                 rolesUpdateDTO.getOperationType(), 
                 rolesUpdateDTO.getRoles());
         
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
