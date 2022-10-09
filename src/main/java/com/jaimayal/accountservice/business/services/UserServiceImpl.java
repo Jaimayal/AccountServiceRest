@@ -1,12 +1,12 @@
-package com.jaimayal.accountservice.services;
+package com.jaimayal.accountservice.business.services;
 
-import com.jaimayal.accountservice.entities.Operation;
-import com.jaimayal.accountservice.entities.Role;
-import com.jaimayal.accountservice.entities.UserEntity;
-import com.jaimayal.accountservice.errors.exceptions.EmailAlreadyRegisteredException;
-import com.jaimayal.accountservice.errors.exceptions.PasswordDoesNotMatchException;
-import com.jaimayal.accountservice.errors.exceptions.UserNotFoundException;
-import com.jaimayal.accountservice.repositories.UserRepository;
+import com.jaimayal.accountservice.persistence.entities.Operation;
+import com.jaimayal.accountservice.persistence.entities.Role;
+import com.jaimayal.accountservice.persistence.entities.UserEntity;
+import com.jaimayal.accountservice.business.errors.exceptions.EmailAlreadyRegisteredException;
+import com.jaimayal.accountservice.business.errors.exceptions.PasswordDoesNotMatchException;
+import com.jaimayal.accountservice.business.errors.exceptions.UserNotFoundException;
+import com.jaimayal.accountservice.persistence.repositories.UserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

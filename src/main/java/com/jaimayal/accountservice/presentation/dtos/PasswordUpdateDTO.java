@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.dtos;
+package com.jaimayal.accountservice.presentation.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

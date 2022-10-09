@@ -1,9 +1,10 @@
 package com.jaimayal.accountservice.services;
 
-import com.jaimayal.accountservice.entities.Operation;
-import com.jaimayal.accountservice.entities.Role;
+import com.jaimayal.accountservice.business.services.UserServiceImpl;
+import com.jaimayal.accountservice.persistence.entities.Operation;
+import com.jaimayal.accountservice.persistence.entities.Role;
 import com.jaimayal.accountservice.entities.User;
-import com.jaimayal.accountservice.repositories.UserRepository;
+import com.jaimayal.accountservice.persistence.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
-package com.jaimayal.accountservice.services;
+package com.jaimayal.accountservice.business.services;
 
-import com.jaimayal.accountservice.entities.UserEntity;
+import com.jaimayal.accountservice.persistence.entities.UserEntity;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

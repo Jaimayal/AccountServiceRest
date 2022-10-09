@@ -1,9 +1,9 @@
-package com.jaimayal.accountservice.controllers;
+package com.jaimayal.accountservice.presentation.controllers;
 
-import com.jaimayal.accountservice.dtos.PasswordUpdateDTO;
-import com.jaimayal.accountservice.dtos.UserDTO;
-import com.jaimayal.accountservice.mappers.UserMapper;
-import com.jaimayal.accountservice.services.UserService;
+import com.jaimayal.accountservice.presentation.dtos.PasswordUpdateDTO;
+import com.jaimayal.accountservice.presentation.dtos.UserDTO;
+import com.jaimayal.accountservice.presentation.mappers.UserMapper;
+import com.jaimayal.accountservice.business.services.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

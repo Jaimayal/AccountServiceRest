@@ -1,7 +1,7 @@
-package com.jaimayal.accountservice.mappers;
+package com.jaimayal.accountservice.presentation.mappers;
 
-import com.jaimayal.accountservice.dtos.UserDTO;
-import com.jaimayal.accountservice.entities.UserEntity;
+import com.jaimayal.accountservice.presentation.dtos.UserDTO;
+import com.jaimayal.accountservice.persistence.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

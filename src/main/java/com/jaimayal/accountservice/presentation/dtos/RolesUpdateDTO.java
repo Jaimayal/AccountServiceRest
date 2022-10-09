@@ -1,7 +1,6 @@
-package com.jaimayal.accountservice.dtos;
+package com.jaimayal.accountservice.presentation.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jaimayal.accountservice.entities.Operation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.UniqueElements;

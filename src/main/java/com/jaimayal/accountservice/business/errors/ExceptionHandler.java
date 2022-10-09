@@ -1,7 +1,7 @@
-package com.jaimayal.accountservice.errors;
+package com.jaimayal.accountservice.business.errors;
 
-import com.jaimayal.accountservice.errors.messages.ApiErrorMessageMessage;
-import com.jaimayal.accountservice.errors.messages.ValidationErrorMessage;
+import com.jaimayal.accountservice.business.errors.messages.ApiErrorMessageMessage;
+import com.jaimayal.accountservice.business.errors.messages.ValidationErrorMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

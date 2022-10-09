@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.errors.messages;
+package com.jaimayal.accountservice.business.errors.messages;
 
 import lombok.Getter;
 import lombok.Setter;

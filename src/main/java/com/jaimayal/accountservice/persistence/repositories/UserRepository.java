@@ -1,6 +1,6 @@
-package com.jaimayal.accountservice.repositories;
+package com.jaimayal.accountservice.persistence.repositories;
 
-import com.jaimayal.accountservice.entities.UserEntity;
+import com.jaimayal.accountservice.persistence.entities.UserEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
