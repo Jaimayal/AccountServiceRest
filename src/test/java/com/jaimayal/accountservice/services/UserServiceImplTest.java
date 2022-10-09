@@ -2,7 +2,7 @@ package com.jaimayal.accountservice.services;
 
 import com.jaimayal.accountservice.business.services.UserServiceImpl;
 import com.jaimayal.accountservice.persistence.entities.Operation;
-import com.jaimayal.accountservice.persistence.entities.Role;
+import com.jaimayal.accountservice.persistence.entities.Account;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.persistence.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ class UserServiceImplTest {
                 "ayala",
                 "jaime@gmail.com",
                 "12345",
-                List.of(Role.ADMINISTRATOR)
+                List.of(Account.ADMINISTRATOR)
         );
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
@@ -75,7 +75,7 @@ class UserServiceImplTest {
                 "ayala",
                 "jaime@gmail.com",
                 "12345",
-                List.of(Role.USER)
+                List.of(Account.USER)
         );
 
         // when
@@ -99,7 +99,7 @@ class UserServiceImplTest {
                 "ayala",
                 "jaime@gmail.com",
                 oldPassword,
-                List.of(Role.ADMINISTRATOR)
+                List.of(Account.ADMINISTRATOR)
         );
         
         String someEmail = "jaime@gmail.com";
@@ -126,20 +126,20 @@ class UserServiceImplTest {
                 "ayala",
                 "jaime@gmail.com",
                 "12345",
-                new ArrayList<>(List.of(Role.ADMINISTRATOR))
+                new ArrayList<>(List.of(Account.ADMINISTRATOR))
         );
 
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         
         // when
-        underTest.updateUserRolesById(user.getId(), Operation.GRANT, List.of("USER"));
+        underTest.updateUserRolesById(user.getId(), Operation.ADD, List.of("USER"));
         
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
 
         User userCaptured = userCaptor.getValue();
-        assertThat(userCaptured.getRoles().contains(Role.USER)).isTrue();
+        assertThat(userCaptured.getRoles().contains(Account.USER)).isTrue();
     }
 
     @Test
@@ -151,7 +151,7 @@ class UserServiceImplTest {
                 "ayala",
                 "jaime@gmail.com",
                 "12345",
-                new ArrayList<>(List.of(Role.ADMINISTRATOR))
+                new ArrayList<>(List.of(Account.ADMINISTRATOR))
         );
         
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
@@ -164,6 +164,6 @@ class UserServiceImplTest {
         verify(userRepository).save(userCaptor.capture());
 
         User userCaptured = userCaptor.getValue();
-        assertThat(userCaptured.getRoles().contains(Role.ADMINISTRATOR)).isFalse();
+        assertThat(userCaptured.getRoles().contains(Account.ADMINISTRATOR)).isFalse();
     }
 }

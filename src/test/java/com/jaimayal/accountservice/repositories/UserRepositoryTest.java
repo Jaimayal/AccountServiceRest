@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.repositories;
 
-import com.jaimayal.accountservice.persistence.entities.Role;
+import com.jaimayal.accountservice.persistence.entities.Account;
 import com.jaimayal.accountservice.entities.User;
 import com.jaimayal.accountservice.persistence.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class UserRepositoryTest {
                 "ayala",
                 "jaime@gmail.com",
                 "12345",
-                List.of(Role.USER)
+                List.of(Account.USER)
         );
         underTest.save(user);
         
@@ -46,7 +46,7 @@ class UserRepositoryTest {
                 "ayala",
                 "jaime@gmail.com",
                 "12345",
-                List.of(Role.USER)
+                List.of(Account.USER)
         );
         underTest.save(user);
         

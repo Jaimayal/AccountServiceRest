@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.presentation.controllers;
 
-import com.jaimayal.accountservice.presentation.dtos.RolesUpdateDTO;
+import com.jaimayal.accountservice.presentation.dtos.AccountsUpdateDTO;
 import com.jaimayal.accountservice.presentation.dtos.UserDTO;
 import com.jaimayal.accountservice.presentation.mappers.UserMapper;
 import com.jaimayal.accountservice.business.services.UserService;
@@ -65,15 +65,15 @@ public class UserController {
 
     /**
      * Updates the user roles following the specified RoleOperation.
-     * @param rolesUpdateDTO The format of the operation to apply.
+     * @param accountsUpdateDTO The format of the operation to apply.
      * @param id Unique ID linked to one user
      * @return 200 OK or 404 NOT_FOUND if user does not exist.
-     * @see RolesUpdateDTO
+     * @see AccountsUpdateDTO
      */
     @PatchMapping("/{id}/roles")
     public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
-                                                 @RequestBody @Valid final RolesUpdateDTO rolesUpdateDTO) {
-        userService.updateUserRolesById(id, rolesUpdateDTO.getOperationType(), rolesUpdateDTO.getRoles());
+                                                 @RequestBody @Valid final AccountsUpdateDTO accountsUpdateDTO) {
+        userService.updateUserRolesById(id, accountsUpdateDTO.getOperationType(), accountsUpdateDTO.getAccounts());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

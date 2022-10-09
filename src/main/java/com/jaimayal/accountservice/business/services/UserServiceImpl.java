@@ -1,7 +1,7 @@
 package com.jaimayal.accountservice.business.services;
 
 import com.jaimayal.accountservice.persistence.entities.Operation;
-import com.jaimayal.accountservice.persistence.entities.Role;
+import com.jaimayal.accountservice.persistence.entities.Account;
 import com.jaimayal.accountservice.persistence.entities.UserEntity;
 import com.jaimayal.accountservice.business.errors.exceptions.EmailAlreadyRegisteredException;
 import com.jaimayal.accountservice.business.errors.exceptions.PasswordDoesNotMatchException;
@@ -72,10 +72,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUserRolesById(Long id, String operationType, List<String> roles) {
+    public void updateUserRolesById(Long id, String operationType, List<String> accounts) {
         Optional<UserEntity> possibleUser = this.repository.findById(id);
         UserEntity user = possibleUser.orElseThrow(UserNotFoundException::new);
-        this.updateUserRoles(user, operationType, roles);
+        this.updateUserRoles(user, operationType, accounts);
         this.repository.save(user);
     }
 
@@ -84,14 +84,14 @@ public class UserServiceImpl implements UserService {
         return repository.findAll(pageable).getContent();
     }
 
-    private void updateUserRoles(UserEntity user, String operation, List<String> roles) {
+    private void updateUserRoles(UserEntity user, String operation, List<String> accounts) {
         Operation operationType = Operation.valueOf(operation);
         switch (operationType) {
-            case GRANT:
-                roles.forEach(role -> user.getRoles().add(Role.valueOf(role)));
+            case ADD:
+                accounts.forEach(account -> user.getAccounts().add(Account.valueOf(account.toUpperCase())));
                 break;
             case REMOVE:
-                roles.forEach(role -> user.getRoles().remove(Role.valueOf(role)));
+                accounts.forEach(account -> user.getAccounts().remove(Account.valueOf(account.toUpperCase())));
                 break;
         }
     }

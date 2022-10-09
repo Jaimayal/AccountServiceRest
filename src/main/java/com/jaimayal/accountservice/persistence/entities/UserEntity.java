@@ -40,5 +40,5 @@ public class UserEntity {
     @Enumerated
     @CollectionTable
     @ElementCollection
-    private List<Role> roles = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
 }

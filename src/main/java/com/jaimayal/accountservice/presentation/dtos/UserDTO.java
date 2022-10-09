@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode
@@ -38,4 +39,7 @@ public class UserDTO {
     @Pattern(regexp = "^[\\w-.,]+$", 
             message = "password must contain only letters, digits and _ - . , symbols")
     private String password;
+    
+    @JsonProperty(value = "accounts", access = JsonProperty.Access.READ_ONLY)
+    private List<String> accounts;
 }
