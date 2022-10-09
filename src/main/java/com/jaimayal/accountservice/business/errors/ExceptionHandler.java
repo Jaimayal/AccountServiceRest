@@ -1,6 +1,6 @@
 package com.jaimayal.accountservice.business.errors;
 
-import com.jaimayal.accountservice.business.errors.messages.ApiErrorMessageMessage;
+import com.jaimayal.accountservice.business.errors.messages.ApiErrorMessage;
 import com.jaimayal.accountservice.business.errors.messages.ValidationErrorMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                                                                          HttpHeaders headers, 
                                                                          HttpStatus status, 
                                                                          WebRequest request) {
-        ApiErrorMessageMessage ApiErrorMessage = new ApiErrorMessageMessage(status, request, ex.getMessage());
+        ApiErrorMessage ApiErrorMessage = new ApiErrorMessage(status, request, ex.getMessage());
         return new ResponseEntity<>(ApiErrorMessage, headers, status);
     }
     @Override
@@ -37,7 +37,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                                                                    HttpHeaders headers,
                                                                    HttpStatus status,
                                                                    WebRequest request) {
-        ApiErrorMessageMessage apiErrorMessage = new ApiErrorMessageMessage(
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(
                 status, 
                 request, 
                 "This endpoint does not exist since no handler was found");

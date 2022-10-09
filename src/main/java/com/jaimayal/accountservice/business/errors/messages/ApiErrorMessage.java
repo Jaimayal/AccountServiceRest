@@ -7,10 +7,10 @@ import org.springframework.web.context.request.WebRequest;
 
 @Getter
 @Setter
-public class ApiErrorMessageMessage extends GlobalErrorMessage {
+public class ApiErrorMessage extends GlobalErrorMessage {
     private String message;
 
-    public ApiErrorMessageMessage(HttpStatus status, WebRequest request, String message) {
+    public ApiErrorMessage(HttpStatus status, WebRequest request, String message) {
         super(status, request);
         this.message = message;
     }
