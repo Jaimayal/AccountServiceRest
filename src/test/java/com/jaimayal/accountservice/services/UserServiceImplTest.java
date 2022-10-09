@@ -22,15 +22,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
-    private UserService underTest;
+    private UserServiceImpl underTest;
     
     @BeforeEach
     void setUp() {
-        underTest = new UserService(userRepository);
+        underTest = new UserServiceImpl(userRepository);
     }
 
     @Test
@@ -47,7 +47,7 @@ class UserServiceTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         // when
-        underTest.getUserById(user.getId());
+        underTest.retrieveUserById(user.getId());
 
         // then
         verify(userRepository).findById(user.getId());
@@ -78,7 +78,7 @@ class UserServiceTest {
         );
 
         // when
-        underTest.addUser(user);
+        underTest.registerUser(user);
 
         // then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);

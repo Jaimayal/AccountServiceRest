@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.error_messages;
+package com.jaimayal.accountservice.errors.messages;
 
 
 import lombok.Getter;
@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class ValidationError extends GeneralError {
+public class ValidationErrorMessage extends GlobalErrorMessage {
     private List<String> messages;
     
-    public ValidationError(HttpStatus status, WebRequest request, 
-                           MethodArgumentNotValidException exception) {
+    public ValidationErrorMessage(HttpStatus status, WebRequest request,
+                                  MethodArgumentNotValidException exception) {
         super(status, request);
         this.messages = exception.getBindingResult()
                 .getFieldErrors()

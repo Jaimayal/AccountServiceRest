@@ -11,11 +11,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-/**
- * This class serves as a JSON envelop to receive a List of Roles and a specified Operation that 
- * will be applied to a specific user.
- * @see Operation
- */
 @Data
 @AllArgsConstructor
 public class RolesUpdateDTO {

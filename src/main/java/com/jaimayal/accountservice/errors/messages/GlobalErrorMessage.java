@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.error_messages;
+package com.jaimayal.accountservice.errors.messages;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class GeneralError {
+public class GlobalErrorMessage {
     private LocalDateTime timestamp;
     private int status;
     private String error;
     private String path;
     
-    public GeneralError(HttpStatus status, WebRequest request) {
+    public GlobalErrorMessage(HttpStatus status, WebRequest request) {
         this.timestamp = LocalDateTime.now();
         this.status = status.value();
         this.error = status.getReasonPhrase();

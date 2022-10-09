@@ -38,7 +38,7 @@ public class AuthController {
      */
     @PostMapping()
     public ResponseEntity<?> registerUser(@RequestBody @Valid final UserDTO user) {
-        Long userId = userService.addUser(userMapper.fromDtoToEntity(user));
+        Long userId = userService.registerUser(userMapper.fromDtoToEntity(user));
         
         String userLocation = ServletUriComponentsBuilder
                 .fromCurrentRequest()

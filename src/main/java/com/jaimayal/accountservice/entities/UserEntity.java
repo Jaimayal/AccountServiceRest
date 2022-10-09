@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,7 +34,7 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
     
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", unique = false, nullable = false)
     private String password;
     
     @Enumerated

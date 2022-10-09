@@ -4,6 +4,7 @@ import com.jaimayal.accountservice.dtos.RolesUpdateDTO;
 import com.jaimayal.accountservice.dtos.UserDTO;
 import com.jaimayal.accountservice.mappers.UserMapper;
 import com.jaimayal.accountservice.services.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -37,7 +38,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
-        UserDTO user = userMapper.fromEntityToDto(userService.getUserById(id));
+        UserDTO user = userMapper.fromEntityToDto(userService.retrieveUserById(id));
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
@@ -46,8 +47,8 @@ public class UserController {
      * @return 200 OK 
      */
     @GetMapping()
-    public ResponseEntity<?> retrieveAllUsers() {
-        List<UserDTO> users = userMapper.fromEntitiesToDtos(userService.getAllUsers());
+    public ResponseEntity<?> retrieveUsers(Pageable pageable) {
+        List<UserDTO> users = userMapper.fromEntitiesToDtos(userService.retrieveUsers(pageable));
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
@@ -72,10 +73,7 @@ public class UserController {
     @PatchMapping("/{id}/roles")
     public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
                                                  @RequestBody @Valid final RolesUpdateDTO rolesUpdateDTO) {
-        userService.updateUserRolesById(id, 
-                rolesUpdateDTO.getOperationType(), 
-                rolesUpdateDTO.getRoles());
-        
+        userService.updateUserRolesById(id, rolesUpdateDTO.getOperationType(), rolesUpdateDTO.getRoles());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

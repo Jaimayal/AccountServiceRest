@@ -1,4 +1,4 @@
-package com.jaimayal.accountservice.error_messages;
+package com.jaimayal.accountservice.errors.messages;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,10 +7,10 @@ import org.springframework.web.context.request.WebRequest;
 
 @Getter
 @Setter
-public class ApiError extends GeneralError {
+public class ApiErrorMessageMessage extends GlobalErrorMessage {
     private String message;
 
-    public ApiError(HttpStatus status, WebRequest request, String message) {
+    public ApiErrorMessageMessage(HttpStatus status, WebRequest request, String message) {
         super(status, request);
         this.message = message;
     }
