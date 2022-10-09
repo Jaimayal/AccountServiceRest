@@ -73,7 +73,7 @@ public class UserController {
     @PatchMapping("/{id}/roles")
     public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
                                                  @RequestBody @Valid final AccountsUpdateDTO accountsUpdateDTO) {
-        userService.updateUserRolesById(id, accountsUpdateDTO.getOperationType(), accountsUpdateDTO.getAccounts());
+        userService.updateUserRolesById(id, accountsUpdateDTO.getOperation(), accountsUpdateDTO.getAccounts());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

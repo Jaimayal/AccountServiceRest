@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -13,31 +15,31 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @ToString
+@PropertySource(value = "classpath:messages.properties")
 public class UserDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     
     @JsonProperty(value = "name")
-    @NotBlank(message = "name is required and it must not be blank")
+    @NotBlank(message = "{user.name.notblank}")
     private String name;
     
     @JsonProperty(value = "lastName")
-    @NotBlank(message = "lastName is required and it must not be blank")
+    @NotBlank(message = "{user.lastname.notblank}")
     private String lastName;
     
     @JsonProperty(value = "email")
-    @NotBlank(message = "email is required and it must not be blank")
+    @NotBlank(message = "{user.email.not-blank}")
     @Pattern(regexp = "^[\\w\\.-]+@[a-zA-Z-]+(\\.[a-zA-Z]+)+$", 
-            message = "email must contain only letters, " +
-                    "one @ and one (or multiple) end domain(s) (.com.es, .us, .com, .arg.io, etc)")
+            message = "{user.email.pattern}")
     private String email;
     
     @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
     @ToString.Exclude
-    @NotBlank(message = "password is required and it must not be blank")
-    @Size(min = 8, max = 30, message = "password must be within 8 and 30 chars long")
+    @NotBlank(message = "{user.password.notblank}")
+    @Size(min = 8, max = 30, message = "{user.password.size}")
     @Pattern(regexp = "^[\\w-.,]+$", 
-            message = "password must contain only letters, digits and _ - . , symbols")
+            message = "{user.password.pattern}")
     private String password;
     
     @JsonProperty(value = "accounts", access = JsonProperty.Access.READ_ONLY)
