@@ -10,6 +10,6 @@ public interface UserService {
     void updateUserPasswordById(Long id, String oldPassword, String newPassword);
     UserEntity retrieveUserById(Long id);
     void deleteUserById(Long id);
-    void updateUserRolesById(Long id, String operationType, List<String> roles);
+    void updateUserAccountsById(Long id, String operationType, List<String> roles);
     List<UserEntity> retrieveUsers(Pageable pageable);
 }

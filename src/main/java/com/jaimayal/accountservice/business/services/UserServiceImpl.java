@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
             throw new EmailAlreadyRegisteredException();
         }
         
-        this.repository.save(user);
-        return user.getId();
+        UserEntity savedEntity = this.repository.save(user);
+        return savedEntity.getId();
     }
 
     @Override
@@ -72,10 +72,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUserRolesById(Long id, String operationType, List<String> accounts) {
+    public void updateUserAccountsById(Long id, String operationType, List<String> accounts) {
         Optional<UserEntity> possibleUser = this.repository.findById(id);
         UserEntity user = possibleUser.orElseThrow(UserNotFoundException::new);
-        this.updateUserRoles(user, operationType, accounts);
+        this.updateUserAccounts(user, operationType, accounts);
         this.repository.save(user);
     }
 
@@ -84,8 +84,8 @@ public class UserServiceImpl implements UserService {
         return repository.findAll(pageable).getContent();
     }
 
-    private void updateUserRoles(UserEntity user, String operation, List<String> accounts) {
-        Operation operationType = Operation.valueOf(operation);
+    private void updateUserAccounts(UserEntity user, String operation, List<String> accounts) {
+        Operation operationType = Operation.valueOf(operation.toUpperCase());
         switch (operationType) {
             case ADD:
                 accounts.forEach(account -> user.getAccounts().add(Account.valueOf(account.toUpperCase())));

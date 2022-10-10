@@ -1,6 +1,7 @@
 package com.jaimayal.accountservice.presentation.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @ToString
+@AllArgsConstructor
 @PropertySource(value = "classpath:messages.properties")
 public class UserDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
