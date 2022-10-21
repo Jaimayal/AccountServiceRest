@@ -29,8 +29,8 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                                                                          HttpHeaders headers, 
                                                                          HttpStatus status, 
                                                                          WebRequest request) {
-        ApiErrorMessage ApiErrorMessage = new ApiErrorMessage(status, request, ex.getMessage());
-        return new ResponseEntity<>(ApiErrorMessage, headers, status);
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(status, request, ex.getMessage());
+        return new ResponseEntity<>(apiErrorMessage, headers, status);
     }
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
