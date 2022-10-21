@@ -14,7 +14,7 @@ Available endpoints:
   2. DELETE api/admin/user deletes a user.
   3. GET api/admin/user displays information about all users.
 
-Test all this endpoints on your own machine using [this postman collection]().
+Test all this endpoints on your own machine using [this postman collection](./docs/Account%20Service.postman_collection.json).
 
 You can find details on [how to import a Postman collection here](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman)
 

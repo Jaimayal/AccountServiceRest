@@ -14,7 +14,7 @@ Endpoints que provee este servicio:
     2. DELETE api/admin/user eliminar un usuario
     3. GET api/admin/user mostrar informacion acerca de todos los usuarios.
 
-Puedes probarlos todos importando [esta coleccion de Postman]().
+Puedes probarlos todos importando [esta coleccion de Postman](./docs/Account%20Service.postman_collection.json).
 
 Mira mas detalles sobre [como importar una coleccion a Postman aqui](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman)
 

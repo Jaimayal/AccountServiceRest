@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "96abf04b-4fd3-4e20-9e1f-789922ac1e47",
+		"name": "Account Service",
+		"description": "RESTful API containing one unique resource for learning purposes. Serves as a basic sample API for Frontend learning.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20663982"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "RetrieveUserById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{apiVersion}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{apiVersion}}",
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "Retrieves one unique user from the database based on its unique ID."
+					},
+					"response": []
+				},
+				{
+					"name": "RetrieveUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{apiVersion}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{apiVersion}}",
+								"users"
+							]
+						},
+						"description": "Retrieves multiple users from the database (10 users by default). It can go up to 20 (per default configuration) sending page?= and size?= notation."
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const someVar = 'oeoe';\r",
+									"console.log(someVar);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jaime\",\r\n    \"lastName\": \"Ayala\",\r\n    \"email\": \"ja3@gail.com\",\r\n    \"password\": \"12309875\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{apiVersion}}/users/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{apiVersion}}",
+								"users",
+								""
+							]
+						},
+						"description": "Registers a new user into the database. The JSON must contain the next fields:\n\n\\* name  \n\\* lastName  \n\\* email  \n\\* password"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{apiVersion}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{apiVersion}}",
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "Deletes one user from the database based on its unique ID."
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUserAccountsById",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operation\": \"ADD\",\r\n    \"accounts\": [\r\n        \"instagram\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{apiVersion}}/users/{{userId}}/accounts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{apiVersion}}",
+								"users",
+								"{{userId}}",
+								"accounts"
+							]
+						},
+						"description": "Updates the User Accounts based on its unique ID. The JSON structure must contain:\n\n\\* operation  \n\\* accounts (array)"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUserPasswordById",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"12309875\",\r\n    \"newPassword\": \"23456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{apiVersion}}/users/{{userId}}/password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{apiVersion}}",
+								"users",
+								"{{userId}}",
+								"password"
+							]
+						},
+						"description": "Updates the User password based on its unique ID. The JSON structure must contain:\n\n\\* oldpassword  \n\\* newpassword"
+					},
+					"response": []
+				}
+			],
+			"description": "Contains all operations related to the Users resource."
+		}
+	]
+}
