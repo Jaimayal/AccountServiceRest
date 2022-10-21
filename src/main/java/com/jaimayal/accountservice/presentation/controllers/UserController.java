@@ -30,49 +30,28 @@ public class UserController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
-
-    /**
-     * Gets the all the details of one user by its unique ID.
-     * @param id Unique ID linked to one user
-     * @return 200 OK or 404 NOT_FOUND if user does not exist.
-     */
+    
     @GetMapping("/{id}")
     public ResponseEntity<?> retrieveUserById(@PathVariable final Long id) {
         UserDTO user = userMapper.fromEntityToDto(userService.retrieveUserById(id));
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
-
-    /**
-     * Gets a List containing all the details of all the users.
-     * @return 200 OK 
-     */
+    
     @GetMapping()
     public ResponseEntity<?> retrieveUsers(Pageable pageable) {
         List<UserDTO> users = userMapper.fromEntitiesToDtos(userService.retrieveUsers(pageable));
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
-
-    /**
-     * Deletes one user by its unique ID.
-     * @param id Unique ID linked to one user
-     * @return 204 NO_CONTENT or 404 NOT_FOUND if user does not exist.
-     */
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable final Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-    /**
-     * Updates the user roles following the specified RoleOperation.
-     * @param accountsUpdateDTO The format of the operation to apply.
-     * @param id Unique ID linked to one user
-     * @return 200 OK or 404 NOT_FOUND if user does not exist.
-     * @see AccountsUpdateDTO
-     */
-    @PatchMapping("/{id}/roles")
-    public ResponseEntity<?> updateUserRolesById(@PathVariable final Long id,
-                                                 @RequestBody @Valid final AccountsUpdateDTO accountsUpdateDTO) {
+    
+    @PatchMapping("/{id}/accounts")
+    public ResponseEntity<?> updateUserAccountsById(@PathVariable final Long id,
+                                                    @RequestBody @Valid final AccountsUpdateDTO accountsUpdateDTO) {
         userService.updateUserAccountsById(id, accountsUpdateDTO.getOperation(), accountsUpdateDTO.getAccounts());
         return ResponseEntity.status(HttpStatus.OK).build();
     }

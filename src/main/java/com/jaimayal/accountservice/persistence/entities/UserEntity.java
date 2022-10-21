@@ -45,4 +45,20 @@ public class UserEntity {
     @CollectionTable
     @ElementCollection
     private List<Account> accounts = new ArrayList<>();
+
+    public void updateAccounts(String operation, List<String> accounts) {
+        Operation operationType = Operation.valueOf(operation.toUpperCase());
+        switch (operationType) {
+            case ADD:
+                accounts.forEach(account -> this.getAccounts().add(Account.valueOf(account.toUpperCase())));
+                break;
+            case REMOVE:
+                accounts.forEach(account -> this.getAccounts().remove(Account.valueOf(account.toUpperCase())));
+                break;
+        }
+    }
+
+    public void updatePassword(String newPassword) {
+        this.setPassword(newPassword);
+    }
 }

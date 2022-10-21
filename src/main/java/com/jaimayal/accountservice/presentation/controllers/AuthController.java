@@ -29,13 +29,7 @@ public class AuthController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
-
-    /**
-     * Registers one new user
-     * @param user the user that must be registered into the database
-     * @return 200 OK or 409 CONFLICT if email already registered
-     * @see UserDTO
-     */
+    
     @PostMapping()
     public ResponseEntity<?> registerUser(@RequestBody @Valid final UserDTO user) {
         Long userId = userService.registerUser(userMapper.fromDtoToEntity(user));
@@ -48,13 +42,7 @@ public class AuthController {
         
         return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, userLocation).build();
     }
-
-    /**
-     * Changes the specified user's password.
-     * @param passwordUpdateDTO Contains the actual user's email and its new password
-     * @return 202 ACCEPTED
-     * @see PasswordUpdateDTO
-     */
+    
     @PatchMapping("/{id}/password")
     public ResponseEntity<?> updateUserPasswordById(@PathVariable final Long id,
                                                     @RequestBody @Valid final PasswordUpdateDTO passwordUpdateDTO) {

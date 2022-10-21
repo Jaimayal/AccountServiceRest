@@ -1,11 +1,9 @@
 package com.jaimayal.accountservice.business.services;
 
-import com.jaimayal.accountservice.persistence.entities.Operation;
-import com.jaimayal.accountservice.persistence.entities.Account;
-import com.jaimayal.accountservice.persistence.entities.UserEntity;
 import com.jaimayal.accountservice.business.errors.exceptions.EmailAlreadyRegisteredException;
 import com.jaimayal.accountservice.business.errors.exceptions.PasswordDoesNotMatchException;
 import com.jaimayal.accountservice.business.errors.exceptions.UserNotFoundException;
+import com.jaimayal.accountservice.persistence.entities.UserEntity;
 import com.jaimayal.accountservice.persistence.repositories.UserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,17 +38,12 @@ public class UserServiceImpl implements UserService {
     public void updateUserPasswordById(Long id, String oldPassword, String newPassword) {
         Optional<UserEntity> possibleUser = this.repository.findById(id);
         UserEntity user = possibleUser.orElseThrow(UserNotFoundException::new);
-        this.updateUserPassword(user, oldPassword, newPassword);
-        this.repository.save(user);
-    }
-    
-    private void updateUserPassword(UserEntity user, String oldPassword, String newPassword) {
-        if (user.getPassword().equals(oldPassword)) {
-            user.setPassword(newPassword);
-            return;
+        if (!user.getPassword().equals(oldPassword)) {
+            throw new PasswordDoesNotMatchException();
         }
         
-        throw new PasswordDoesNotMatchException();
+        user.updatePassword(newPassword);
+        this.repository.save(user);
     }
 
     @Override
@@ -75,24 +68,12 @@ public class UserServiceImpl implements UserService {
     public void updateUserAccountsById(Long id, String operationType, List<String> accounts) {
         Optional<UserEntity> possibleUser = this.repository.findById(id);
         UserEntity user = possibleUser.orElseThrow(UserNotFoundException::new);
-        this.updateUserAccounts(user, operationType, accounts);
+        user.updateAccounts(operationType, accounts);
         this.repository.save(user);
     }
 
     @Override
     public List<UserEntity> retrieveUsers(Pageable pageable) {
         return repository.findAll(pageable).getContent();
-    }
-
-    private void updateUserAccounts(UserEntity user, String operation, List<String> accounts) {
-        Operation operationType = Operation.valueOf(operation.toUpperCase());
-        switch (operationType) {
-            case ADD:
-                accounts.forEach(account -> user.getAccounts().add(Account.valueOf(account.toUpperCase())));
-                break;
-            case REMOVE:
-                accounts.forEach(account -> user.getAccounts().remove(Account.valueOf(account.toUpperCase())));
-                break;
-        }
     }
 }
